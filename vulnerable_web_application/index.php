@@ -17,8 +17,7 @@
       
 		      
 			
-	<div class="row">
-		<div class="col s12 m6 ">       
+	       
           	<div class="card hoverable valign center-left z-depth-4 login">
 	        	<form>
 		            <div class="card-image">
@@ -53,8 +52,7 @@
 		            
 				</form>
           	</div>
-        </div>
-    </div>
+ 
    
       
       
