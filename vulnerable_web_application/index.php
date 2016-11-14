@@ -13,17 +13,17 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
-    <body>
+    <body class="blue-grey lighten-5">
       
 		      
 			
 	<div class="row">
-		<div class="col s12 m6 offset-m3">       
+		<div class="col s12 m6 ">       
           	<div class="card hoverable valign center-left z-depth-4 login">
 	        	<form>
 		            <div class="card-image">
 		              <img src="assets/img/IMG_3331.jpg">
-		              <span class="card-title">Vunerable Web App<br/><small>prohibited area</small></span>
+		              <span class="card-title">Vulnerable Web App<br/><small>prohibited area</small></span>
 		            </div>
 		            <div class="card-content">
 		              <p>I am a very simple app. Don`t push hard, maybe I can burn up.</p>
@@ -45,8 +45,8 @@
 					        </div>
 					      </div>
 					      
-					       <a class="waves-effect waves-light btn orange darken-2" href="#">Login</a>
-		              <a class="waves-effect waves-light btn  red darken-2" href="#">Dont press me!</a>
+					       <button class="waves-effect waves-light btn orange darken-2" href="#">Login</button>
+						   <a class="waves-effect waves-light btn  red darken-2" href="#">Dont press me!</a>
 					      
 					  </div>
 		            </div>
