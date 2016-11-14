@@ -6,6 +6,7 @@
       <!--Import materialize.css-->
 	  <!-- Compiled and minified CSS -->
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	  <link rel="stylesheet" href="assets/css/style.css">
 
      
       <!--Let browser know website is optimized for mobile-->
@@ -14,8 +15,47 @@
 
     <body>
       
-      
-      
+		      
+			
+	<div class="row">
+		<div class="col s12 m6 offset-m3">       
+          	<div class="card hoverable valign center-left z-depth-4 login">
+	        	<form>
+		            <div class="card-image">
+		              <img src="assets/img/IMG_3331.jpg">
+		              <span class="card-title">Vunerable Web App<br/><small>prohibited area</small></span>
+		            </div>
+		            <div class="card-content">
+		              <p>I am a very simple app. Don`t push hard, maybe I can burn up.</p>
+		              
+		               <div class="row">
+					    <div class="col s12">
+					      <div class="row">
+					       
+					        <div class="input-field col s12">
+					          <input id="email" type="email" class="validate">
+					          <label for="email" data-error="Hey! You should learn how to type your email." data-success="right">Email</label>
+					        </div>
+					       </div>
+					       
+					       <div class="row">
+					        <div class="input-field col s12">
+					          <input id="pass" type="password" class="validate">
+					          <label for="pass" data-error="Oh man, you don`t remmember your pass? Ask on stackoverflow." data-success="right">Password</label>
+					        </div>
+					      </div>
+					      
+					       <a class="waves-effect waves-light btn orange darken-2" href="#">Login</a>
+		              <a class="waves-effect waves-light btn  red darken-2" href="#">Dont press me!</a>
+					      
+					  </div>
+		            </div>
+		            
+				</form>
+          	</div>
+        </div>
+    </div>
+   
       
       
       <!--Import jQuery before materialize.js-->
