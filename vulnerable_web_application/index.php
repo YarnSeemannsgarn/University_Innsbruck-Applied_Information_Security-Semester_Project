@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Redirect if logged in
+if(isset($_SESSION['userid'])) {
+    header("Location: /listing.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +25,7 @@
 
     <body class="blue-grey lighten-5">
         <div class="card hoverable valign center-left z-depth-4 login">
-            <form>
+            <form action="?login=1" method="post">
                 <div class="card-image">
                     <img src="assets/img/IMG_3331.jpg">
                     <span class="card-title">Vulnerable Web App<br/><small>prohibited area</small></span>
