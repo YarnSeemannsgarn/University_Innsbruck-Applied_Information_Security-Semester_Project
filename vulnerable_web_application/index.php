@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
 // Redirect if logged in
@@ -6,7 +9,27 @@ if(isset($_SESSION['userid'])) {
     header("Location: /listing.php");
     exit;
 } else if (isset($_GET['login'])) {
-    echo "test";
+    try {
+        $pdo = new PDO('sqlite:database.sqlite');
+
+        $email = $_POST['email'];
+        $password = $_POST['pass'];
+
+        $statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $result = $statement->execute(array('email' => $email));
+        $user = $statement->fetch();
+
+        // Check password
+        if ($user !== false && $password == $user['pw']) {
+            $_SESSION['userid'] = $user['id'];
+            header("Location: /listing.php");
+            exit;
+        } else {
+            $errorMessage = "E-Mail oder Passwort war ungültig<br>";
+        }
+    } catch (PDOException $e){
+        die ('DB Error');
+    }
 }
 ?>
 
@@ -26,6 +49,11 @@ if(isset($_SESSION['userid'])) {
     </head>
 
     <body class="blue-grey lighten-5">
+        <?php
+        if(isset($errorMessage)) {
+            echo $errorMessage;
+        }
+        ?>
         <div class="card hoverable valign center-left z-depth-4 login">
             <form action="?login=1" method="post">
                 <div class="card-image">
@@ -33,28 +61,28 @@ if(isset($_SESSION['userid'])) {
                     <span class="card-title">Vulnerable Web App<br/><small>prohibited area</small></span>
                 </div>
                 <div class="card-content">
-                    <p>I am a very simple app. Don`t push hard, maybe I can burn up.</p>
+                    <p>I am a very simple app. Don't push hard, maybe I can burn up.</p>
 		            
 		            <div class="row">
 					    <div class="col s12">
 					        <div class="row">
 					            
 					            <div class="input-field col s12">
-					                <input id="email" type="email" class="validate">
+					                <input id="email" name="email" type="email" class="validate">
 					                <label for="email" data-error="Hey! You should learn how to type your email." data-success="right">Email</label>
 					            </div>
 					        </div>
 					        
 					        <div class="row">
 					            <div class="input-field col s12">
-					                <input id="pass" type="password" class="validate">
+					                <input id="pass" name="pass" type="password" class="validate">
 					                <label for="pass" data-error="Oh man, you don`t remmember your pass? Ask on stackoverflow." data-success="right">Password</label>
 					            </div>
 					        </div>
-					        
-					        <button class="waves-effect waves-light btn orange darken-2" href="#">Login</button>
-                            <a class="waves-effect waves-light btn  red darken-2" href="#">Dont press me!</a>
-					        
+
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Login
+                                <i class="material-icons right">send</i>
+                            </button>
                         </div>
                     </div>
                 </div>
