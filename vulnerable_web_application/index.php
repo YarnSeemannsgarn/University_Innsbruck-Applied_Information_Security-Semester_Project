@@ -5,6 +5,8 @@ session_start();
 if(isset($_SESSION['userid'])) {
     header("Location: /listing.php");
     exit;
+} else if (isset($_GET['login'])) {
+    echo "test";
 }
 ?>
 
