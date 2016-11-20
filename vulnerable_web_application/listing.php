@@ -36,7 +36,7 @@ $products = $statement->fetchAll();
                                 <td><?php echo $product['name']; ?></td>
                                 <td><?php echo $product['description']; ?></td>
                                 <td><?php echo number_format(floatval($product['price']), 2) . "€"; ?></td>
-                                <td><a class="waves-effect waves-light btn btn-small green darken-2" href="#">Edit</a> <a class="waves-effect waves-light btn btn-small red darken-2" href="#">Delete</a></td>
+                                <td><a class="waves-effect waves-light btn btn-small grey darken-2"  href="javascript:document.location = 'product.php?id=<?=$product["id"]?>';" style="cursor: pointer;">Info</a> <a class="waves-effect waves-light btn btn-small green darken-2" href="#">Edit</a> <a class="waves-effect waves-light btn btn-small red darken-2" href="#">Delete</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
