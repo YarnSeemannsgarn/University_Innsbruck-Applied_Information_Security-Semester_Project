@@ -1,12 +1,13 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 session_start();
 
 // Redirect if logged in
 if(isset($_SESSION['userid'])) {
-    header("Location: /listing.php");
+    header("Location: listing.php");
     exit;
 } else if (isset($_GET['login'])) {
     try {
@@ -22,7 +23,7 @@ if(isset($_SESSION['userid'])) {
         // Check password
         if ($user !== false && $password == $user['pw']) {
             $_SESSION['userid'] = $user['id'];
-            header("Location: /listing.php");
+            header('Location: listing.php');
             exit;
         } else {
             $errorMessage = "E-Mail oder Passwort war ungültig<br>";
@@ -50,9 +51,7 @@ if(isset($_SESSION['userid'])) {
 
     <body class="blue-grey lighten-5">
         <?php
-        if(isset($errorMessage)) {
-            echo $errorMessage;
-        }
+       
         ?>
         <div class="card hoverable valign center-left z-depth-4 login">
             <form action="?login=1" method="post">
@@ -83,6 +82,14 @@ if(isset($_SESSION['userid'])) {
                             <button class="btn waves-effect waves-light" type="submit" name="action">Login
                                 <i class="material-icons right">send</i>
                             </button>
+                            
+                            <div class="row">
+					            <div class="input-field col s12">
+					                <span class="red"><?= (isset($errorMessage) ? $errorMessage : "")?></span>
+					            </div>
+					        </div>
+	                        
+	                        </div>
                         </div>
                     </div>
                 </div>
