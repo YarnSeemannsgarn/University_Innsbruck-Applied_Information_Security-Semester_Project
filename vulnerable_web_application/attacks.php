@@ -4,17 +4,14 @@ include_once("init.php");
 
 $search = $_GET['keyword'];
 
-$pdo = new PDO('sqlite:database.sqlite');
-    
-$query = "SELECT * FROM products WHERE id LIKE '%".$search."%' 
-												OR  name LIKE '%".$search."%' 
-												OR  description LIKE '%".$search."%' 
-												OR  price LIKE '%".$search."%'";
-$statement = $pdo->prepare($query);
-$result = $statement->execute();
-$products = $statement->fetchAll();
 
 
+$products[0] = array(
+    "name" => "SQL Injection",
+    "description" => "Steel show all fields of listing",
+    "value" => "asdfs",
+    "attack" => "sdas"
+); 
 
 
 ?>
@@ -32,29 +29,22 @@ $products = $statement->fetchAll();
                             <tr>
                                 <th data-field="name">Name</th>
                                 <th data-field="description">Description</th>
-                                <th data-field="price"> Price</th>
-                                <th data-field="edit"> Edit</th>
+                                <th data-field="value"> Value</th>
+                                <th data-field="attack"> Attack!</th>
                             </tr>
                         </thead>
                         <tbody>
-	                        <?= (count($products)==0 ? "No results!" : "")?>
                             <?php foreach($products as $product): ?>
                             <tr>
                                 <td><?php echo $product['name']; ?></td>
                                 <td><?php echo $product['description']; ?></td>
-                                <td><?php echo number_format(floatval($product['price']), 2) . "€"; ?></td>
-                                <td><a class="waves-effect waves-light btn btn-small green darken-2" href="#">Edit</a> <a class="waves-effect waves-light btn btn-small red darken-2" href="#">Delete</a></td>
+                                <td><?php echo $product['value'];?></td>
+                                <td><a class="waves-effect waves-light btn btn-small red darken-2" href="<?=$product['value']?>">Attack!</a</td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    </br>
-                    <div class="row">
-	                	<div class="col s12 m10">
-		                	 <a class="waves-effect waves-light btn btn-small blue darken-2" href="#">Add</a>
-		                </div>
-	                </div>
-                </div>
+                   </div>
             </div>
             
         </div>   
