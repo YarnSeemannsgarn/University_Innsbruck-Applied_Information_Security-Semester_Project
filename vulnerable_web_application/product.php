@@ -4,12 +4,13 @@ include_once("init.php");
 $pdo = new PDO('sqlite:database.sqlite');
     
  $id = $_GET['id'];
-    
-$statement = $pdo->prepare("SELECT * FROM products WHERE id='".$id."'");
+    $query = "SELECT * FROM products WHERE id='".$id."'";
+    echo $query;
+$statement = $pdo->prepare($query);
 $result = $statement->execute();
 $products = $statement->fetchAll();
 
-
+print_r($products);
 
 $product = $products[0];
 
