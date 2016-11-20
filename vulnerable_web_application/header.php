@@ -22,12 +22,14 @@
                     <li class="search-box">
                     <form action="search.php" method="get">
 	                    <div class="input-field">
-				          <input id="search" type="search" name="keyword" required>
+				          <input id="search" type="search" name="keyword" value="<?=$_GET['keyword']?>" required>
 				          <label for="search"><i class="material-icons">search</i></label>
 				          <i class="material-icons">close</i>
 				        </div>
 				      </form>
                     </li>
+                     <li><a href="attacks.php">Attacks</a></li>
+                     <li><a href="listing.php">Listing</a></li>
                      <li><a href="logout.php">Logout</a></li>
                 </ul>
             </div>
