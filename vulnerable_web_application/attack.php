@@ -1,18 +1,16 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+include_once("init.php");
 
-session_start();
 
-if(!isset($_SESSION['userid'])) {
-    header("Location: index.php");
-    exit;
-}
+$search = $_GET['keyword'];
 
 $pdo = new PDO('sqlite:database.sqlite');
     
-$statement = $pdo->prepare("SELECT * FROM products");
+$query = "SELECT * FROM products WHERE id LIKE '%".$search."%' 
+												OR  name LIKE '%".$search."%' 
+												OR  description LIKE '%".$search."%' 
+												OR  price LIKE '%".$search."%'";
+$statement = $pdo->prepare($query);
 $result = $statement->execute();
 $products = $statement->fetchAll();
 
@@ -28,6 +26,7 @@ $products = $statement->fetchAll();
 	    <div class="row listing-row">
 		    <div class="col s12 m10 offset-m1 ">  
 			    <div class="card-panel">     
+				    <h4>Search results for: <?=$search?></h4>
                     <table class=" highlight stripped responsive-table listing">
                         <thead>
                             <tr>
@@ -38,6 +37,7 @@ $products = $statement->fetchAll();
                             </tr>
                         </thead>
                         <tbody>
+	                        <?= (count($products)==0 ? "No results!" : "")?>
                             <?php foreach($products as $product): ?>
                             <tr>
                                 <td><?php echo $product['name']; ?></td>
