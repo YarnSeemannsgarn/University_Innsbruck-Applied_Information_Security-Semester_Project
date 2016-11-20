@@ -1,14 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-session_start();
-
-if(!isset($_SESSION['userid'])) {
-    header("Location: index.php");
-    exit;
-}
+include_once("init.php");
 
 $pdo = new PDO('sqlite:database.sqlite');
     
@@ -28,6 +19,8 @@ $products = $statement->fetchAll();
 	    <div class="row listing-row">
 		    <div class="col s12 m10 offset-m1 ">  
 			    <div class="card-panel">     
+				    <h4>Listing of products</h4>
+
                     <table class=" highlight stripped responsive-table listing">
                         <thead>
                             <tr>
