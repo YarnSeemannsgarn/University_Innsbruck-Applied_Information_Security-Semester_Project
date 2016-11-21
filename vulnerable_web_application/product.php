@@ -3,13 +3,13 @@ include_once("init.php");
 
 $id = $_GET['id'];
 $query = "SELECT * FROM products WHERE id='".$id."'";
-echo $query;
-echo "<br>";
+//echo $query;
+//echo "<br>";
 $statement = $PDO->prepare($query);
 $result = $statement->execute();
 $products = $statement->fetchAll();
 
-print_r($products);
+//print_r($products);
 
 $product = $products[0];
 ?>
