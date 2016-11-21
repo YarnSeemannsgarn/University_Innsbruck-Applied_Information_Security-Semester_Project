@@ -4,7 +4,7 @@ include_once("init.php");
 
 $search = $_GET['keyword'];
 
-$pdo = new PDO('sqlite:database.sqlite');
+$pdo = new PDO('sqlite:db/database.sqlite');
   
  
 $query = "SELECT * FROM products WHERE id LIKE '%".$search."%' 
@@ -34,7 +34,7 @@ try {
 
 
 ?>
- <?
+ <?php
 	 include_once("header.php");
  ?>
 <pre><?=$query?></pre>
@@ -79,7 +79,7 @@ try {
             
         </div>   
         
- <?
+ <?php
 	 include_once("footer.php");
  ?>
              
