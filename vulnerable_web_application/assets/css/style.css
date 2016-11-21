@@ -4,12 +4,8 @@ width: 450px;
 }
 
 body{
-
-
 	background-origin: padding-box;
 	background-size: 255px 255px;
-
-
 }
 
 .nav-wrapper{
@@ -31,6 +27,6 @@ table.listing{
     padding: 0 0.5rem;
 }
 
-.search-box{
-	
+.search{
+	background-color: #fff;
 }

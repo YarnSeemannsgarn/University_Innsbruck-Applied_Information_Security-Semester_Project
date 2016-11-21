@@ -1,14 +1,22 @@
 <?php
 include_once("init.php");
 
+$where = "";
 if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $statement = $PDO->prepare("DELETE FROM products WHERE id = $id");
     $result = $statement->execute();
     $statement->debugDumpParams();
+} else if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    $where = "WHERE id LIKE '%".$search."%' OR 
+              name LIKE '%".$search."%' OR 
+              description LIKE '%".$search."%' OR 
+              price LIKE '%".$search."%'
+              ";
 }
 
-$statement = $PDO->prepare("SELECT * FROM products");
+$statement = $PDO->prepare("SELECT * FROM products " . $where);
 $result = $statement->execute();
 $products = $statement->fetchAll();
 ?>
@@ -20,7 +28,18 @@ include_once("header.php");
 	<div class="col s12 m10 offset-m1 ">  
 		<div class="card-panel">     
 			<h4>Listing of products</h4>
-
+            <nav>
+                <div class="nav-wrapper search">
+                    <form>
+                        <div class="input-field">
+                            <input id="search" type="search" name="search" value="<?php echo $_GET['search']?>" required>
+                            <label for="search"><i class="material-icons">search</i></label>
+                            <i class="material-icons">close</i>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+            
             <table class=" highlight stripped responsive-table listing">
                 <thead>
                     <tr>
