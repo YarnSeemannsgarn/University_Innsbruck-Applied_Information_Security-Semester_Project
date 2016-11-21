@@ -32,7 +32,7 @@ include_once("header.php");
                 <div class="nav-wrapper search">
                     <form>
                         <div class="input-field">
-                            <input id="search" type="search" name="search" value="<?php echo $_GET['search']?>" required>
+                            <input id="search" type="search" name="search" value="<?php echo $_GET['search']?>">
                             <label for="search"><i class="material-icons">search</i></label>
                             <i class="material-icons">close</i>
                         </div>
