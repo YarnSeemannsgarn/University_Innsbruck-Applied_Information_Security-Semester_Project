@@ -1,9 +1,14 @@
 <?php
 include_once("init.php");
 
-$pdo = new PDO('sqlite:database.sqlite');
+if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $statement = $PDO->prepare("DELETE FROM products WHERE id = $id");
+    $result = $statement->execute();
+    $statement->debugDumpParams();
+}
 
-$statement = $pdo->prepare("SELECT * FROM products");
+$statement = $PDO->prepare("SELECT * FROM products");
 $result = $statement->execute();
 $products = $statement->fetchAll();
 ?>
@@ -37,7 +42,7 @@ include_once("header.php");
                                 <a class="waves-effect waves-light btn btn-small grey darken-2"  href="javascript:document.location = 'product.php?id=<?=$product["id"]?>';" style="cursor: pointer;">Info</a>
                                 <?php if(isset($_SESSION['userid'])): ?>
                                     <a class="waves-effect waves-light btn btn-small green darken-2" href="#">Edit</a>
-                                    <a class="waves-effect waves-light btn btn-small red darken-2" href="#">Delete</a>
+                                    <a class="waves-effect waves-light btn btn-small red darken-2" href="?delete=<?php echo $product['id']?>">Delete</a>
                                 <?php endif; ?>
                             </td>
                         </tr>

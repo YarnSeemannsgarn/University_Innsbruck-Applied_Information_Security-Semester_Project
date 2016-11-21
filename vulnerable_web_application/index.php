@@ -8,12 +8,10 @@ if(isset($_SESSION['userid'])) {
     exit;
 } else if (isset($_GET['login'])) {
     try {
-        $pdo = new PDO('sqlite:database.sqlite');
-
         $email = $_POST['email'];
         $password = $_POST['pass'];
 
-        $statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $statement = $PDO->prepare("SELECT * FROM users WHERE email = :email");
         $result = $statement->execute(array('email' => $email));
         $user = $statement->fetch();
 
