@@ -5,10 +5,10 @@ include_once("init.php");
 $search = $_GET['keyword'];
 
 $query = "SELECT * FROM products WHERE id LIKE '%".$search."%' 
-														OR  name LIKE '%".$search."%' 
-														OR  description LIKE '%".$search."%' 
-														OR  price LIKE '%".$search."%'
-														";
+          OR  name LIKE '%".$search."%' 
+          OR  description LIKE '%".$search."%' 
+          OR  price LIKE '%".$search."%'
+          ";
 
 
 $query = "SELECT * FROM products WHERE id LIKE '%".$search."%'";
@@ -22,13 +22,6 @@ try {
 } catch (PDOException $e){
     echo ('DB Error');
 }
-
-
-
-
-
-
-
 
 ?>
 <?php
