@@ -4,9 +4,13 @@ include_once("init.php");
 $where = "";
 if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    $statement = $PDO->prepare("DELETE FROM products WHERE id = $id");
-    $result = $statement->execute();
-    $statement->debugDumpParams();
+	try {
+	    $statement = $PDO->prepare("DELETE FROM products WHERE id = $id");
+		$result = $statement->execute();
+		$statement->debugDumpParams();
+	} catch (PDOException $e){
+	    echo $e->getMessage();
+	}
 } else if (isset($_GET['search'])) {
     $search = $_GET['search'];
     $where = "WHERE id LIKE '%".$search."%' OR 
@@ -16,9 +20,20 @@ if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
               ";
 }
 
-$statement = $PDO->prepare("SELECT * FROM products " . $where);
-$result = $statement->execute();
-$products = $statement->fetchAll();
+$products=array();
+
+//var_dump("SELECT * FROM products " . $where);
+
+try {
+    $statement = $PDO->prepare("SELECT * FROM products " . $where);
+	$result = $statement->execute();
+	$products = $statement->fetchAll();
+} catch (PDOException $e){
+    echo $e->getMessage();
+}
+
+
+
 ?>
 
 <?php 
@@ -27,7 +42,13 @@ include_once("header.php");
 <div class="row listing-row">
 	<div class="col s12 m10 offset-m1 ">  
 		<div class="card-panel">     
+			<?php if (!isset($_GET['search'])){ ?>
 			<h4>Listing of products</h4>
+			<?php }else {
+				
+				echo "<h4>Search results for: ".$_GET['search']."</h4>";
+				
+			}?>
             <nav>
                 <div class="nav-wrapper search">
                     <form>
