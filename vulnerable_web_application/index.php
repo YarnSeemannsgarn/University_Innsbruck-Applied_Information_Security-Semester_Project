@@ -21,11 +21,11 @@ if(isset($_SESSION['userid'])) {
             header('Location: listing.php');
             exit;
         } else {
-            $errorMessage = "E-Mail oder Passwort war ungültig<br>";
+	        header('Location: ?message=E-Mail oder Passwort war ungültig');
         }
     } catch (PDOException $e){
-        die ('DB Error');
-    }
+    	echo $e->getMessage();
+	}
 }
 ?>
 
@@ -64,7 +64,7 @@ include_once("header.php");
                     
                     <div class="row">
 					    <div class="input-field col s12">
-					        <span class="red"><?= (isset($errorMessage) ? $errorMessage : "")?></span>
+					        <span class="red"><?= (isset($_GET["message"]) ? $_GET["message"] : "")?></span>
 					    </div>
 					</div>
 	                
