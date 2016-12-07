@@ -19,6 +19,9 @@
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <!-- <li><a href="attacks.php">Attacks</a></li> -->
                     <li><a href="listing.php">Listing</a></li>
+                    <?php if(isset($_SESSION['admin'])): ?>
+                        <li><a href="admin.php">Admin</a></li>
+                    <?php endif ?>
                     <?php if(isset($_SESSION['userid'])): ?>
                         <li><a href="logout.php">Logout</a></li>
                     <?php else: ?>

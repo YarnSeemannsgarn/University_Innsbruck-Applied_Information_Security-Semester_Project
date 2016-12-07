@@ -2,7 +2,7 @@
 
 include_once("init.php");
 
-// Redirect if logged in
+// Login - redirect if already logged in
 if(isset($_SESSION['userid'])) {
     header("Location: listing.php");
     exit;
@@ -18,6 +18,10 @@ if(isset($_SESSION['userid'])) {
         // Check password
         if ($user !== false && $password == $user['pw']) {
             $_SESSION['userid'] = $user['id'];
+
+            // Admin
+            if ($user['id'] == 1)
+                $_SESSION['admin'] = true;
             header('Location: listing.php');
             exit;
         } else {
