@@ -49,6 +49,13 @@ $attacks[2] = array(
     "attack" => "/db/database.sqlite"
 );
 
+$attacks[3] = array(
+    "name" => "A7 - Missing Function Level Access Control",
+    "description" => "Opens the admin page as a normal user",
+    "value" => "/admin.php",
+    "attack" => "/admin.php"
+);
+
 ?>
 
 <?php

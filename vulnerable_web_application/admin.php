@@ -29,7 +29,7 @@ include_once("header.php");
                     <tr>
                         <th>User Id</th>
                         <th>E-Mail</th>
-                        <th>PW</th>  
+                        <th>Password</th>  
                     </tr>
                 </thead>
                 <tbody>
