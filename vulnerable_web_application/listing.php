@@ -42,13 +42,11 @@ include_once("header.php");
 <div class="row listing-row">
 	<div class="col s12 m10 offset-m1 ">  
 		<div class="card-panel">     
-			<?php if (!isset($_GET['search'])){ ?>
-			<h4>Listing of products</h4>
-			<?php }else {
-				
-				echo "<h4>Search results for: ".$_GET['search']."</h4>";
-				
-			}?>
+			<?php if (!isset($_GET['search'])): ?>
+			    <h4>Listing of products</h4>
+			<?php else: ?>
+				<h4>Search results for: <?php echo $_GET['search']; ?></h4>
+			<?php endif ?>
             <nav>
                 <div class="nav-wrapper search">
                     <form>
@@ -104,5 +102,3 @@ include_once("header.php");
 <?php 
 include_once("footer.php");
 ?>
-
-
