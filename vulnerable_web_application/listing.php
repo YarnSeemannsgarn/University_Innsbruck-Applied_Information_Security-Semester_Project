@@ -7,7 +7,6 @@ if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
 	try {
 	    $statement = $PDO->prepare("DELETE FROM products WHERE id = $id");
 		$result = $statement->execute();
-		$statement->debugDumpParams();
 	} catch (PDOException $e){
 	    echo $e->getMessage();
 	}
