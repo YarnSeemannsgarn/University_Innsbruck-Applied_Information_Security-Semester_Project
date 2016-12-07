@@ -17,7 +17,7 @@
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo">Vulnerable App</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="attacks.php">Attacks</a></li>
+                    <!-- <li><a href="attacks.php">Attacks</a></li> -->
                     <li><a href="listing.php">Listing</a></li>
                     <?php if(isset($_SESSION['userid'])): ?>
                         <li><a href="logout.php">Logout</a></li>
