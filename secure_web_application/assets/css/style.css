@@ -1,0 +1,32 @@
+.login{
+margin: 5% auto;
+width: 450px;	
+}
+
+body{
+	background-origin: padding-box;
+	background-size: 255px 255px;
+}
+
+.nav-wrapper{
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+table.listing{
+	margin:0px;
+}
+
+.listing-row{
+	margin-top: 2%;
+}
+
+.btn-small {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0.5rem;
+}
+
+.search{
+	background-color: #fff;
+}
