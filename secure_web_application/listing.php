@@ -5,17 +5,17 @@ $where = "";
 if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
     $id = $_GET['delete'];
     try {
-        $statement = $PDO->prepare("DELETE FROM products WHERE id = $id");
-        $result = $statement->execute();
+        $statement = $PDO->prepare("DELETE FROM products WHERE id = :id");
+        $result = $statement->execute(array(':id' => $id));
     } catch (PDOException $e){
         echo $e->getMessage();
     }
 } else if (isset($_GET['search'])) {
     $search = $_GET['search'];
-    $where = "WHERE id LIKE '%".$search."%' OR 
-              name LIKE '%".$search."%' OR 
-              description LIKE '%".$search."%' OR 
-              price LIKE '%".$search."%'
+    $where = "WHERE id LIKE :search OR 
+              name LIKE :search OR 
+              description LIKE :search OR 
+              price LIKE :search
               ";
 }
 
@@ -23,7 +23,11 @@ $products=array();
 
 try {
     $statement = $PDO->prepare("SELECT * FROM products " . $where);
-	$result = $statement->execute();
+    if (isset($_GET['search'])) {
+	    $result = $statement->execute(array(':search' => "%" . $_GET['search'] . "%"));
+    } else {
+        $result = $statement->execute();
+    }
 	$products = $statement->fetchAll();
 } catch (PDOException $e){
     echo $e->getMessage();

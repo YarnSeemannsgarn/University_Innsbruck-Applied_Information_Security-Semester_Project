@@ -2,9 +2,9 @@
 include_once("init.php");
 
 $id = $_GET['id'];
-$query = "SELECT * FROM products WHERE id='".$id."'";
+$query = "SELECT * FROM products WHERE id = :id";
 $statement = $PDO->prepare($query);
-$result = $statement->execute();
+$result = $statement->execute(array(':id' => $id));
 $products = $statement->fetchAll();
 $product = $products[0];
 ?>
