@@ -6,5 +6,4 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 session_start();
 $PDO = new PDO('sqlite:db/database.sqlite');
 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-
 ?>

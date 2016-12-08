@@ -3,14 +3,9 @@ include_once("init.php");
 
 $id = $_GET['id'];
 $query = "SELECT * FROM products WHERE id='".$id."'";
-//echo $query;
-//echo "<br>";
 $statement = $PDO->prepare($query);
 $result = $statement->execute();
 $products = $statement->fetchAll();
-
-//print_r($products);
-
 $product = $products[0];
 ?>
 
@@ -19,29 +14,25 @@ include_once("header.php");
 ?>
 
 <div class="row listing-row">
-	<div class="col s12 m10 offset-m1 ">  
-		<div class="card-panel">     
-			<h4>Product info</h4>
-			
-			<?php if(count($products)==0): ?>
-				No results men!"; 
-			<?php else: ?>
+    <div class="col s12 m10 offset-m1 ">  
+        <div class="card-panel">     
+            <h4>Product info</h4>
+            <?php if(count($products)==0): ?>
+                No results men!"; 
+            <?php else: ?>
                 <table class=" highlight stripped responsive-table listing">
                     <tr>
                         <td>Name</td>
                         <td><?php echo $product['name']; ?></td>         
                     </tr>
-                    
                     <tr>
                         <td>Description</td>
                         <td><?php echo $product['description']; ?></td>         
                     </tr>
-                    
                     <tr>
                         <td>Price</td>
                         <td><?php echo number_format(floatval($product['price']), 2) . "€"; ?></td>         
                     </tr>
-                    
                     <?php if(isset($_SESSION['userid'])): ?>
                     <tr>
                         <td>Action</td>
@@ -55,11 +46,8 @@ include_once("header.php");
             <?php endif ?>
         </div>
     </div>
-    
 </div>   
 
 <?php
 include_once("footer.php");
 ?>
-
-

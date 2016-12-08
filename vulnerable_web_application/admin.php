@@ -8,8 +8,8 @@ if (!isset($_SESSION['userid'])) {
 
 try {
     $statement = $PDO->prepare("SELECT * FROM users");
-	$result = $statement->execute();
-	$users = $statement->fetchAll();
+    $result = $statement->execute();
+    $users = $statement->fetchAll();
 } catch (PDOException $e){
     echo $e->getMessage();
 }
@@ -21,9 +21,9 @@ include_once("header.php");
 ?>
 
 <div class="row listing-row">
-	<div class="col s12 m10 offset-m1 ">  
-		<div class="card-panel">   
-			<h4>Users</h4>  
+    <div class="col s12 m10 offset-m1 ">
+        <div class="card-panel">   
+            <h4>Users</h4>  
             <table class=" highlight stripped responsive-table listing">
                 <thead>
                     <tr>

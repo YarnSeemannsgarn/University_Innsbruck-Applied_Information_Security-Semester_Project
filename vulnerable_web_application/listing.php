@@ -4,12 +4,12 @@ include_once("init.php");
 $where = "";
 if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
     $id = $_GET['delete'];
-	try {
-	    $statement = $PDO->prepare("DELETE FROM products WHERE id = $id");
-		$result = $statement->execute();
-	} catch (PDOException $e){
-	    echo $e->getMessage();
-	}
+    try {
+        $statement = $PDO->prepare("DELETE FROM products WHERE id = $id");
+        $result = $statement->execute();
+    } catch (PDOException $e){
+        echo $e->getMessage();
+    }
 } else if (isset($_GET['search'])) {
     $search = $_GET['search'];
     $where = "WHERE id LIKE '%".$search."%' OR 
@@ -21,8 +21,6 @@ if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
 
 $products=array();
 
-//var_dump("SELECT * FROM products " . $where);
-
 try {
     $statement = $PDO->prepare("SELECT * FROM products " . $where);
 	$result = $statement->execute();
@@ -30,22 +28,19 @@ try {
 } catch (PDOException $e){
     echo $e->getMessage();
 }
-
-
-
 ?>
 
 <?php 
 include_once("header.php");
 ?>
 <div class="row listing-row">
-	<div class="col s12 m10 offset-m1 ">  
-		<div class="card-panel">     
-			<?php if (!isset($_GET['search'])): ?>
-			    <h4>Listing of products</h4>
-			<?php else: ?>
-				<h4>Search results for: <?php echo $_GET['search']; ?></h4>
-			<?php endif ?>
+    <div class="col s12 m10 offset-m1 ">  
+        <div class="card-panel">     
+            <?php if (!isset($_GET['search'])): ?>
+                <h4>Listing of products</h4>
+            <?php else: ?>
+                <h4>Search results for: <?php echo $_GET['search']; ?></h4>
+            <?php endif ?>
             <nav>
                 <div class="nav-wrapper search">
                     <form>
@@ -57,7 +52,6 @@ include_once("header.php");
                     </form>
                 </div>
             </nav>
-            
             <table class=" highlight stripped responsive-table listing">
                 <thead>
                     <tr>
@@ -88,12 +82,12 @@ include_once("header.php");
             </table>
             <br>
             <div class="row">
-	            <div class="col s12 m10">
+                <div class="col s12 m10">
                     <?php if(isset($_SESSION['userid'])): ?>
-		                <a class="waves-effect waves-light btn btn-small blue darken-2" href="#">Add</a>
+                        <a class="waves-effect waves-light btn btn-small blue darken-2" href="#">Add</a>
                     <?php endif; ?>
-		        </div>
-	        </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>   

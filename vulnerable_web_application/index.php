@@ -44,35 +44,29 @@ include_once("header.php");
         </div>
         <div class="card-content">
             <p>I am a very simple app. Don't push hard, maybe I can burn up.</p>
-		    
 		    <div class="row">
-				<div class="col s12">
-					<div class="row">
-					    
-					    <div class="input-field col s12">
-					        <input id="email" name="email" type="email" class="validate">
-					        <label for="email" data-error="Hey! You should learn how to type your email." data-success="right">Email</label>
-					    </div>
-					</div>
-					
-					<div class="row">
-					    <div class="input-field col s12">
-					        <input id="pass" name="pass" type="password" class="validate">
-					        <label for="pass" data-error="Oh man, you don`t remmember your pass? Ask on stackoverflow." data-success="right">Password</label>
-					    </div>
-					</div>
-
+                <div class="col s12">
+                    <div class="row">    
+                        <div class="input-field col s12">
+                            <input id="email" name="email" type="email" class="validate">
+                            <label for="email" data-error="Hey! You should learn how to type your email." data-success="right">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="pass" name="pass" type="password" class="validate">
+                            <label for="pass" data-error="Oh man, you don`t remmember your pass? Ask on stackoverflow." data-success="right">Password</label>
+                        </div>
+                    </div>
                     <button class="btn waves-effect waves-light" type="submit" name="action">Login
                         <i class="material-icons right">send</i>
                     </button>
-                    
                     <div class="row">
-					    <div class="input-field col s12">
-					        <span class="red"><?= (isset($_GET["message"]) ? $_GET["message"] : "")?></span>
-					    </div>
-					</div>
-	                
-	            </div>
+                        <div class="input-field col s12">
+                            <span class="red"><?= (isset($_GET["message"]) ? $_GET["message"] : "")?></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

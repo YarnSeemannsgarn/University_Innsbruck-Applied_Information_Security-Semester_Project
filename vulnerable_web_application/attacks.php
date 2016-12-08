@@ -63,9 +63,9 @@ include_once("header.php");
 ?>
 
 <div class="row listing-row">
-	<div class="col s12 m10 offset-m1 ">  
-		<div class="card-panel">   
-			<h4>Make some nice attack</h4>  
+    <div class="col s12 m10 offset-m1 ">  
+        <div class="card-panel">   
+            <h4>Make some nice attack</h4>  
             <table class=" highlight stripped responsive-table listing">
                 <thead>
                     <tr>
@@ -73,6 +73,7 @@ include_once("header.php");
                         <th>What it does</th>
                         <th>How it does it</th>  
                     </tr>
+                </thead>
                 <tbody>
                     <?php foreach($attacks as $attack): ?>
                         <tr>
@@ -86,7 +87,6 @@ include_once("header.php");
             </table>
         </div>
     </div>
-    
 </div>   
 
 <?php 
