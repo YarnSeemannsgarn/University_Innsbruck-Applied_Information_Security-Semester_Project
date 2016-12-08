@@ -39,11 +39,10 @@ include_once("header.php");
 <div class="card hoverable valign center-left z-depth-4 login">
     <form action="?login=1" method="post">
         <div class="card-image">
-            <img src="assets/img/IMG_3331.jpg">
-            <span class="card-title">Vulnerable Web App<br/><small>prohibited area</small></span>
+            <img src="assets/img/P1050413.JPG">
+            <span class="card-title">"Secure" Web App</span>
         </div>
         <div class="card-content">
-            <p>I am a very simple app. Don't push hard, maybe I can burn up.</p>
 		    <div class="row">
                 <div class="col s12">
                     <div class="row">    

@@ -43,7 +43,6 @@ include_once("header.php");
             <span class="card-title">Vulnerable Web App<br/><small>prohibited area</small></span>
         </div>
         <div class="card-content">
-            <p>I am a very simple app. Don't push hard, maybe I can burn up.</p>
 		    <div class="row">
                 <div class="col s12">
                     <div class="row">    
