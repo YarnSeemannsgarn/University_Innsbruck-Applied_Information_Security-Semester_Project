@@ -1,7 +1,7 @@
 <?php
 include_once("init.php");
 
-if (!isset($_SESSION['userid'])) {
+if (!isset($_SESSION['admin'])) {
     echo "Not allowed, you need to have admin rights!";
     exit;
 }
