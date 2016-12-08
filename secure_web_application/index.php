@@ -62,7 +62,7 @@ include_once("header.php");
                     </button>
                     <div class="row">
                         <div class="input-field col s12">
-                            <span class="red"><?= (isset($_GET["message"]) ? $_GET["message"] : "")?></span>
+                            <span class="red"><?= (isset($_GET["message"]) ? htmlentities($_GET["message"]) : "")?></span>
                         </div>
                     </div>
                 </div>
