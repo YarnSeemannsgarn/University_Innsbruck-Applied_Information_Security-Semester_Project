@@ -43,7 +43,7 @@ include_once("header.php");
             <?php if (!isset($_GET['search'])): ?>
                 <h4>Listing of products</h4>
             <?php else: ?>
-                <h4>Search results for: <?php echo $_GET['search']; ?></h4>
+                <h4>Search results for: <?php echo htmlentities($_GET['search']); ?></h4>
             <?php endif ?>
             <nav>
                 <div class="nav-wrapper search">
