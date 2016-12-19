@@ -1,0 +1,292 @@
+\section{Vulnerable and ``Secure'' Web Application}
+\subsection{OWASP flaws}
+
+The Web Applications focus on 4 flaws of the OWASP Top 10 document:
+
+\begin{itemize}
+\item A1 - Injection (in particular SQL-Injection)
+\item A3 - Cross-Site Scripting (XSS)
+\item A5 - Security Misconfiguration
+\item A7 - Missing Function Level Access Control
+\end{itemize}
+
+
+\subsection{Data Model}
+
+The data model was chosen to be as small as possible, so that the flaws are easy to show:
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[width=0.75\textwidth]{pictures/data_model.png}
+    \caption{Data Model}
+    \label{fig:data_model}
+  \end{center}
+\end{figure}
+
+The goal of the attacks is to get the passwords of the users. Normally, these are  not stored unencrypted, but rather as a hashed value. However, especially for the vulnerable web application this seems reasonable and also can be seen as a security misconfiguration (cf. A5). Furthermore the E-Mails of the users could also be a goal for the attacks, because nowadays they could be sold to companies, which e.g. want to send fishing mails to possible victims. 
+
+\clearpage
+\subsection{General code structure}
+
+The Web Applications have a relative simple structure:
+\\
+
+\begin{forest}
+  for tree={
+    font=\ttfamily,
+    grow'=0,
+    child anchor=west,
+    parent anchor=south,
+    anchor=west,
+    calign=first,
+    edge path={
+      \noexpand\path [draw, \forestoption{edge}]
+      (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    },
+    before typesetting nodes={
+      if n=1
+        {insert before={[,phantom]}}
+        {}
+    },
+    fit=band,
+    before computing xy={l=15pt},
+  }
+[root/
+  [assets/
+    [css/]
+    [img/]
+  ]
+  [db/
+    [database.sqlite]
+  ]
+  [index.php]
+  [init.php]
+  [...]
+]
+\end{forest}
+\\
+PHP was chosen for the project, because most web sites on the web still use PHP as their back-end programming language. \\
+\\
+The root folder contains all the PHP scripts of the project. The db folder contains the used SQLite database. SQLite was chosen to easily manage the data during the project. Nevertheless the attacks would also work on other databases (like MySQL), because in the project only general PDO classes are used for database connections and queries.
+
+
+\subsection{Different web pages}
+\label{subsec:web_pages}
+
+There are 3 kinds of users for the web pages:
+
+\begin{itemize}
+\item Not logged-in user (1)
+\item Logged-in user (2)
+\item Logged-in admin user (3)
+\end{itemize}
+
+The users have (or should have) different access rights for the pages and for the database objects of the page:
+
+\clearpage
+\begin{table}[htbp]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{|X|p{3cm}|p{3cm}|p{3cm}|}
+      \hline
+      \textbf{Page} & \textbf{AR (1)} & \textbf{AR (2)} & \textbf{AR (3)} \\
+      \hline
+      \hline
+      index.php \newline (Login) & full & full & full \\
+      \hline
+      listing.php \newline (Product list) & view products & view, edit, delete \& add products & view, edit, delete \& add products \\
+      \hline
+      product.php \newline (Product info) & view product & view product & view product \\
+      \hline
+      admin.php \newline (Admin page to manage users) & - & - & view users \\
+      \hline
+    \end{tabularx}
+    \caption{Access rights (AR) for users}
+    \label{tab:software_components}
+  \end{center}
+\end{table}
+
+
+\subsection{Possible attacks}
+
+\subsubsection{A1 - Injection (in particular SQL-Injection)}
+
+\textbf{Vulnerable Web Application:} \\
+\\
+The web application uses GET-parameters to query different database objects. For example one request to query the product with id 1 would be:
+
+\begin{lstlisting}
+  http://<host>/product.php?id=1
+\end{lstlisting}
+
+The corresponding coding part is:
+
+\begin{lstlisting}[language=PHP]
+  $id = $_GET['id'];
+  $query = "SELECT * FROM products WHERE id='".$id."'";
+  $statement = $PDO->prepare($query);
+  $result = $statement->execute();
+\end{lstlisting}
+
+This can be exploited via SQL-Injection. For example, to show the email and the password of user 1, an attacker can use the following query:
+
+\begin{lstlisting}[language=bash]
+  http://<host>/product.php?id=0' UNION SELECT id, email as name, pw as description, 'dummy' FROM users WHERE id=1 --
+\end{lstlisting}
+
+The result of the normal query is unioned with the attackers query. Because there is no user with id 0, only the attackers query will produce a result and will be used for the output.
+
+\clearpage
+\textbf{``Secure'' Web Application:}\\
+\\
+Preventing injection requires keeping untrusted data separate from commands and queries. In the applications case this means transferring the GET-parameters in some way, so that no injections are possible. The preferred option here is using an API:
+
+\begin{lstlisting}[language=PHP]
+  $id = $_GET['id'];
+  $query = "SELECT * FROM products WHERE id = :id";
+  $statement = $PDO->prepare($query);
+  $result = $statement->execute(array('id' => $id));
+\end{lstlisting}
+
+The GET-parameter is not used directly in the query, but passed to the API as a parameter, which is injection-safe.
+
+
+\subsubsection{A3 - Cross-Site Scripting (XSS)}
+
+\textbf{Vulnerable Web Application:} \\
+\\
+The web application uses GET-parameters also as parameters for HTML content. One example is querying products with the name security:
+
+\begin{lstlisting}
+  http://<host>/listing.php?search=security
+\end{lstlisting}
+
+The corresponding coding part is:
+
+\begin{lstlisting}[language=PHP]
+  <h4>Search results for: <?php echo $_GET['search']; ?></h4>
+\end{lstlisting}
+
+This can be exploited via XSS, because the attacker can also use random JavaScript as a GET-parameter:
+
+\begin{lstlisting}
+  http://<host>/listing.php?search=<script>...</script>
+\end{lstlisting}
+
+For example the attacker can write a program, which logs the key inputs of a user and sends them to an attackers server. Some browsers protect sending data via Java Script to another server by default, but not all and not in older versions. One attack scenario is that the attacker sends the query above to a victim, who probably does not recognize the JavaScript.\\
+\\
+\textbf{``Secure'' Web Application:}\\
+\\
+Preventing XSS requires separation of untrusted data from active browser content. The preferred option is to escape all untrusted data based on the HTML context. For example the previous GET-parameter can be escaped via:
+
+\begin{lstlisting}[language=PHP]
+  <h4>Search results for: <?php echo htmlentities($_GET['search']); ?></h4>
+\end{lstlisting}
+
+One note: XSS can also be used to exploit other vulnerabilities, which are not in focus of this project (e.g Cross-Site Request Forgery (CSRF) and Session Hijacking).
+
+
+\subsubsection{A5 - Security Misconfiguration}
+
+\textbf{Vulnerable Web Application:} \\
+\\
+Security misconfigurations can happen across the whole application stack. The project focuses on Web Server misconfiurations, in particular on Apache, which is a widely used web server. A common mistake there is to include sensitive data files, which are need for the application, but which are not properly protected from unauthorized accesses. For example with the default configuration an attacker could easily download the whole database:
+
+\begin{lstlisting}
+  http://<host>/db/database.sqlite
+\end{lstlisting}
+
+Due to the fact that SQLite database files do not require passwords, the attacker can easily get all E-Mails and passwords. Of course normally the database is not stored directly in a web folder, but often configuration files with passwords for the databases are. These need proper protection as well.\\
+\\
+\textbf{``Secure'' Web Application:} \\
+\\
+First of all the Apache configuration file needs to be adapted with the following lines of code:
+
+\begin{lstlisting}
+  <Directory /path/to/root/web/directory>
+    AllowOverride All
+  </Directory>
+\end{lstlisting}
+
+AllowOverride All enables the usage of .htaccess files in the directories of the web application. It is then for example possible to place a .htaccess file in the db directory with the following content:
+
+\begin{lstlisting}
+  deny from all
+\end{lstlisting}
+
+With this the file database.sqlite cannot be accessed from attackers via the web application.
+
+
+\subsubsection{A7 - Missing Function Level Access Control}
+
+\textbf{Vulnerable Web Application:} \\
+\\
+As shown in sub section \ref{subsec:web_pages}, different users have different access rights. These are managed in the web application via PHP session variables:
+
+\begin{table}[htbp]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{|X|X|}
+      \hline
+      \textbf{User} & \textbf{Session Id}  \\
+      \hline
+      \hline
+      Not logged-in user & - \\
+      \hline
+      Logged-in user & userid \\
+      \hline
+      Logged-in admin user & userid \& admin \\
+      \hline
+    \end{tabularx}
+    \caption{Session ids set for different users}
+    \label{tab:software_components}
+  \end{center}
+\end{table}
+
+The different pages and data objects are protected via these session variables. For example only logged in users can edit and delete products. The corresponding generated HTML for logged in users is:
+
+\begin{lstlisting}[language=PHP]
+  <?php if(isset($_SESSION['userid'])): ?>
+    <a href="#">Edit</a>
+    <a href="?delete=<?php echo $product['id']?>">Delete</a>
+  <?php endif; ?>
+\end{lstlisting}
+
+The code which is corresponding for the deletion is:
+
+\begin{lstlisting}[language=PHP]
+  if (isset($_SESSION['userid']) and isset($_GET['delete'])) {
+    // Delete product
+  }
+\end{lstlisting}
+
+These parts are sufficient. However, access controls like this can easily be misconfigured. For example only admin users (with the set admin session variable) should access the admin page. This is not the case for the vulnerable web application, even so the user does not see a tab for the admin page:
+
+\begin{lstlisting}
+  <?php if(isset($_SESSION['admin'])): ?>
+    <li><a href="admin.php">Admin</a></li>
+  <?php endif ?>
+\end{lstlisting}
+
+Remaining vulnerability for admin page:
+
+\begin{lstlisting}
+  if (!isset($_SESSION['userid'])) {
+    echo "Not allowed, you need to have admin rights!";
+    exit;
+  }
+  // else produce admin page
+\end{lstlisting}
+
+
+\textbf{``Secure'' Web Application:}
+
+The shown vulnerability can easily be fixed via:
+
+\begin{lstlisting}
+  if (!isset($_SESSION['admin'])) {
+    echo "Not allowed, you need to have admin rights!";
+    exit;
+  }
+  // else produce admin page
+\end{lstlisting}
+
+Of course every kind of these misconfigurations needs to be detected. The application should have a consistent and easy to analyze authorization module that is invoked from all of your business functions.

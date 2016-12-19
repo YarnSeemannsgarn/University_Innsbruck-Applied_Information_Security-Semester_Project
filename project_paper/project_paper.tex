@@ -13,6 +13,21 @@
 \usepackage{tabulary}
 \usepackage{enumerate}
 \usepackage[acronym]{glossaries}
+\usepackage{forest}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{my-gray}{RGB}{224,224,224}
+\lstset{
+  breaklines=true,
+  basicstyle=\small,
+  columns=fullflexible,
+  frame=lines,
+  backgroundcolor=\color{my-gray},
+  showspaces=false,
+  showstringspaces=false
+}
+
 
 \include{abbreviations}
 \makeglossaries
@@ -36,6 +51,7 @@
 
 \include{01_introduction}
 \include{02_owasp_top_ten}
+\include{03_web_applications}
 %\printglossary[title=List of Acronyms, type=\acronymtype]
 %\listoffigures
 %\listoftables
